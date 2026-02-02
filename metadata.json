@@ -1,0 +1,7 @@
+{
+  "name": "NetVoucher Pro2",
+  "description": "A comprehensive multi-tenant platform for managing MikroTik-based WiFi hotspots, generating vouchers via Mobile Money, and tracking commissions for sub-users.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

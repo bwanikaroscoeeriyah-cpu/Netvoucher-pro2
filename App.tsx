@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { 
   LayoutDashboard, 
@@ -13,13 +12,13 @@ import {
   Wifi,
   Smartphone
 } from 'lucide-react';
-import { User, UserRole } from './types';
-import Dashboard from './components/Dashboard';
-import VoucherSystem from './components/VoucherSystem';
-import WalletView from './components/WalletView';
-import SettingsView from './components/Settings';
-import SupportView from './components/Support';
-import Auth from './components/Auth';
+import { User, UserRole } from './types.ts';
+import Dashboard from './components/Dashboard.tsx';
+import VoucherSystem from './components/VoucherSystem.tsx';
+import WalletView from './components/WalletView.tsx';
+import SettingsView from './components/Settings.tsx';
+import SupportView from './components/Support.tsx';
+import Auth from './components/Auth.tsx';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);

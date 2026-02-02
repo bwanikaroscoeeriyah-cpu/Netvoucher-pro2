@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { User, MikroTikStats } from '../types';
+import { User, MikroTikStats } from '../types.ts';
 import { 
   Users, 
   ArrowUp, 

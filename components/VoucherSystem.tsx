@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { User, VoucherPlan } from '../types';
+import { User, VoucherPlan } from '../types.ts';
 import { 
   Ticket, 
   Smartphone, 
@@ -32,10 +32,7 @@ const VoucherSystem: React.FC<VoucherSystemProps> = ({ user }) => {
 
   const handleBuy = async () => {
     setLoading(true);
-    // 1. Trigger Mobile Money Payment (e.g. Flutterwave)
-    // 2. Wait for Webhook/Callback
-    // 3. Call MikroTik REST API to create user: /ip/hotspot/user/add
-    
+    // 1. Trigger Mobile Money Payment
     setTimeout(() => {
       const mockCode = Math.random().toString(36).substring(2, 10).toUpperCase();
       setVoucherCode(mockCode);
@@ -81,10 +78,6 @@ const VoucherSystem: React.FC<VoucherSystemProps> = ({ user }) => {
             <div className="flex justify-between text-sm">
               <span className="text-slate-500">Duration</span>
               <span className="font-bold text-slate-900">{selectedPlan?.duration}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Transaction ID</span>
-              <span className="font-mono text-slate-400">#NET-{Math.floor(Math.random() * 999999)}</span>
             </div>
           </div>
 
@@ -135,13 +128,6 @@ const VoucherSystem: React.FC<VoucherSystemProps> = ({ user }) => {
             />
           </div>
 
-          <div className="bg-blue-50 p-4 rounded-2xl border border-blue-100 flex gap-3">
-            <Zap className="text-blue-600 shrink-0" size={20} />
-            <p className="text-xs text-blue-700 leading-relaxed">
-              You will receive a popup on your phone to enter your PIN and authorize this payment.
-            </p>
-          </div>
-
           <button 
             disabled={loading}
             onClick={handleBuy}
@@ -162,10 +148,6 @@ const VoucherSystem: React.FC<VoucherSystemProps> = ({ user }) => {
           <h3 className="text-2xl font-bold text-slate-900">WiFi Plans</h3>
           <p className="text-slate-500">Select a package to start browsing</p>
         </div>
-        <div className="flex items-center gap-2 text-slate-400 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm">
-          <Globe size={18} />
-          <span className="text-sm font-medium">Main Station (Kampala)</span>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -180,58 +162,22 @@ const VoucherSystem: React.FC<VoucherSystemProps> = ({ user }) => {
             `}
             onClick={() => setSelectedPlan(plan)}
           >
-            {plan.id === '3' && (
-              <div className="absolute -top-3 left-6 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter shadow-lg">
-                Most Popular
-              </div>
-            )}
-            
             <div className="flex items-center justify-between mb-4">
               <div className={`p-3 rounded-2xl ${selectedPlan?.id === plan.id ? 'bg-blue-600 text-white' : 'bg-slate-50 text-slate-400 group-hover:bg-slate-100'}`}>
                 <Ticket size={24} />
               </div>
-              <div className="text-right">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{plan.duration}</span>
-              </div>
             </div>
-
             <h4 className="font-bold text-slate-900 text-lg mb-1">{plan.name}</h4>
             <div className="flex items-baseline gap-1 mb-6">
               <span className="text-sm font-bold text-slate-400">UGX</span>
               <span className="text-2xl font-black text-slate-900">{plan.price.toLocaleString()}</span>
             </div>
-
-            <button 
-              className={`
-                w-full py-3 rounded-xl font-bold transition-all
-                ${selectedPlan?.id === plan.id 
-                  ? 'bg-blue-600 text-white shadow-lg' 
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}
-              `}
-            >
+            <button className={`w-full py-3 rounded-xl font-bold ${selectedPlan?.id === plan.id ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
               Select Package
             </button>
           </div>
         ))}
       </div>
-
-      {selectedPlan && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-lg px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="bg-slate-900 text-white p-6 rounded-3xl shadow-2xl flex items-center justify-between">
-            <div>
-              <p className="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Order Summary</p>
-              <p className="font-bold text-lg">{selectedPlan.name}</p>
-            </div>
-            <button 
-              onClick={() => setStep('payment')}
-              className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg"
-            >
-              Continue to Pay
-              <Smartphone size={20} />
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
